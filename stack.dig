@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>1</version>
+  <attributes>
+    <entry>
+      <string>Label</string>
+      <string>stack</string>
+    </entry>
+    <entry>
+      <string>shapeType</string>
+      <shapeType>LAYOUT</shapeType>
+    </entry>
+    <entry>
+      <string>Width</string>
+      <int>6</int>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>clk</string>
+        </entry>
+      </elementAttributes>
+      <pos x="220" y="120"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>rst</string>
+        </entry>
+      </elementAttributes>
+      <pos x="220" y="180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>push</string>
+        </entry>
+      </elementAttributes>
+      <pos x="220" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>pop</string>
+        </entry>
+      </elementAttributes>
+      <pos x="220" y="320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>din</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="220" y="400"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>dout</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="580" y="220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>empty</string>
+        </entry>
+      </elementAttributes>
+      <pos x="580" y="320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>External</elementName>
+      <elementAttributes>
+        <entry>
+          <string>applicationType</string>
+          <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>stack</string>
+        </entry>
+        <entry>
+          <string>externalInputs</string>
+          <string>clk,rst,push,pop,din:8</string>
+        </entry>
+        <entry>
+          <string>Width</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>externalOutputs</string>
+          <string>dout:8,empty</string>
+        </entry>
+        <entry>
+          <string>Code</string>
+          <string>module stack(clk, rst, push, pop, din, dout, empty);
+	input clk, rst, push, pop;
+	input [7:0] din;
+	output [7:0] dout;
+	output empty;
+
+	reg [7:0] data[0:255];
+
+	reg [7:0] top;
+
+	always @(posedge clk)
+	begin
+		if(rst)
+			top = 0;
+		else if(pop &amp;&amp; ~empty)
+			top = top - 1;
+		else if(push)
+		begin
+			top = top + 1;
+			data[top] = din;
+		end
+	end
+
+	assign empty = (top == 0)?1:0;
+	assign dout = data[top];
+	
+endmodule</string>
+        </entry>
+      </elementAttributes>
+      <pos x="380" y="220"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="280" y="240"/>
+      <p2 x="380" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="240"/>
+      <p2 x="560" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="320"/>
+      <p2 x="300" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="560" y="320"/>
+      <p2 x="580" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="400"/>
+      <p2 x="320" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="180"/>
+      <p2 x="280" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="260"/>
+      <p2 x="380" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="120"/>
+      <p2 x="320" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="280"/>
+      <p2 x="380" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="220"/>
+      <p2 x="380" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="220"/>
+      <p2 x="580" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="300"/>
+      <p2 x="380" y="300"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="120"/>
+      <p2 x="320" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="320" y="300"/>
+      <p2 x="320" y="400"/>
+    </wire>
+    <wire>
+      <p1 x="560" y="240"/>
+      <p2 x="560" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="180"/>
+      <p2 x="280" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="280"/>
+      <p2 x="300" y="320"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>

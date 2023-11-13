@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes>
+    <entry>
+      <string>shapeType</string>
+      <shapeType>LAYOUT</shapeType>
+    </entry>
+    <entry>
+      <string>Label</string>
+      <string>controller</string>
+    </entry>
+    <entry>
+      <string>Width</string>
+      <int>8</int>
+    </entry>
+  </attributes>
+  <visualElements>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>clk</string>
+        </entry>
+      </elementAttributes>
+      <pos x="200" y="100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>rst</string>
+        </entry>
+      </elementAttributes>
+      <pos x="200" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>start</string>
+        </entry>
+      </elementAttributes>
+      <pos x="200" y="240"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>n&lt;2</string>
+        </entry>
+      </elementAttributes>
+      <pos x="200" y="320"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>continue</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="200" y="420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>sel-r</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>load-r</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>sel-n</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>2</int>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="220"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>load-n</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="280"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>sel-c</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>2</int>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="360"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>load-c</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="420"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>sel-s</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>2</int>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="500"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>push</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="580"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>pop</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="660"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>finish</string>
+        </entry>
+      </elementAttributes>
+      <pos x="800" y="740"/>
+    </visualElement>
+    <visualElement>
+      <elementName>External</elementName>
+      <elementAttributes>
+        <entry>
+          <string>applicationType</string>
+          <appType>IVERILOG</appType>
+        </entry>
+        <entry>
+          <string>Label</string>
+          <string>fib_controller</string>
+        </entry>
+        <entry>
+          <string>externalInputs</string>
+          <string>clk,rst,start,nless2,continue:8</string>
+        </entry>
+        <entry>
+          <string>Width</string>
+          <int>8</int>
+        </entry>
+        <entry>
+          <string>externalOutputs</string>
+          <string>sel_r,load_r,load_n,load_c,push,pop,finish,state:5,sel_n:2,sel_c:2,sel_s:2</string>
+        </entry>
+        <entry>
+          <string>Code</string>
+          <string>/*
+	state	 next 	                  output
+       ======= ========================== =========
+	s0    if start then s1 else s0    	n &lt;- input
+	s1    loop			  continue &lt;- fib-done
+12	loop: if n &lt; 2 then fib-base 
+              else s2
+	s2:   s3			 push continue
+	s3:   s4			 push n
+	s4:   loop			 n&lt;-n-1, continue &lt;- after-fib-n-1
+13 	after-fib-n-1: s5			 n &lt;- stack
+	s5:   s6			 pop
+	s6:   s7		 	 push r
+	s7:   loop			 n &lt;- n-2, continue &lt;- after-fib-n-2
+14	after-fib-n-2:   s8			 n &lt;- stack (fib n-1)
+	s8:   s9			 pop
+	s9:   s10			continue &lt;- stack
+	s10: s11			pop
+	s11: next &lt;- continue	 r &lt;- r + n			 
+
+15   fib-base:    next &lt;- continue	 r &lt;- n
+16   fib-done: 			 finish &lt;- 1
+*/
+
+module fib_controller(
+	clk, rst, start,nless2, continue,
+	sel_r, load_r, sel_n, load_n, sel_c, load_c, sel_s, push,pop, finish, state
+);
+
+	input clk, rst, start,nless2;
+	input [7:0] continue;
+	output sel_r, load_r,  load_n,  load_c, push, pop, finish;
+	output [4:0] state;
+	output [1:0] sel_n, sel_c, sel_s;
+
+	reg [4:0] state, next;
+
+	reg [1:0] sel_n, sel_c, sel_s;
+
+	assign finish = (state == 16)? 1 : 0;
+	
+	assign push = (state==2 || state==3 || state==6)?1:0;
+	assign pop = (state == 5 || state == 8 || state == 10) ? 1 : 0;
+	
+	assign sel_r = (state == 11)?0:1;
+	assign load_r = (state == 15 || state == 11)?1:0;
+	assign load_n = (state == 0 || state == 4 || state == 7|| state == 13|| state == 14) ? 1 : 0;
+
+	always @(state)
+	begin
+		case(state)
+			3: sel_s = 0;
+			2: sel_s = 1;
+			6: sel_s = 2;
+			default: sel_s = 3;
+		endcase
+	end
+
+	always @(state)
+	begin
+		case(state)
+			0: sel_n = 1;
+			4: sel_n = 0;
+			7: sel_n = 3;
+			13: sel_n = 2;
+			14 :sel_n = 2;
+			default: sel_n = 1;
+		endcase
+	end
+
+	assign load_c = (state == 1 || state == 4 || state == 7|| state == 9)?1:0;
+	always @(state)
+	begin
+		case(state)
+			1: sel_c = 0;
+			4: sel_c = 1;
+			9: sel_c = 2;
+			7: sel_c = 3;
+			default: sel_c = 0;
+		endcase
+	end
+
+	always @(state or start or nless2 or continue)
+	begin
+		case(state)
+			0: if(start)
+				next = 1;
+			   else
+				next = 0;
+			1: next = 12;
+			12: if(nless2)
+				next = 15;
+			    else
+				next = 2;
+			2:  next = 3;
+			3: next = 4;
+			4: next = 12;
+			13: next = 5;
+			5: next = 6;
+			6: next = 7;
+			7: next = 12;
+			14: next = 8;
+			8: next = 9;
+			9: next = 10;
+			10: next = 11;
+			11: next = continue;
+			15: next = continue;
+			16: next = 16;
+			default: next = 0;
+		endcase
+	end
+
+	always @(posedge clk)
+	begin
+		if(rst)
+			state = 0;
+		else
+			state = next;
+	end
+
+	
+endmodule</string>
+        </entry>
+      </elementAttributes>
+      <pos x="340" y="100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>state</string>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>8</int>
+        </entry>
+      </elementAttributes>
+      <pos x="980" y="240"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="200" y="160"/>
+      <p2 x="240" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="160"/>
+      <p2 x="340" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="160"/>
+      <p2 x="800" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="160"/>
+      <p2 x="720" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="200" y="320"/>
+      <p2 x="280" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="200" y="100"/>
+      <p2 x="340" y="100"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="100"/>
+      <p2 x="800" y="100"/>
+    </wire>
+    <wire>
+      <p1 x="200" y="420"/>
+      <p2 x="300" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="720" y="420"/>
+      <p2 x="800" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="580"/>
+      <p2 x="800" y="580"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="740"/>
+      <p2 x="800" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="260"/>
+      <p2 x="760" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="200"/>
+      <p2 x="660" y="200"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="360"/>
+      <p2 x="800" y="360"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="140"/>
+      <p2 x="340" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="140"/>
+      <p2 x="740" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="300"/>
+      <p2 x="540" y="300"/>
+    </wire>
+    <wire>
+      <p1 x="200" y="240"/>
+      <p2 x="260" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="240"/>
+      <p2 x="980" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="180"/>
+      <p2 x="340" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="180"/>
+      <p2 x="680" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="660" y="660"/>
+      <p2 x="800" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="500"/>
+      <p2 x="800" y="500"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="120"/>
+      <p2 x="340" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="120"/>
+      <p2 x="780" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="280"/>
+      <p2 x="800" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="280"/>
+      <p2 x="580" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="220"/>
+      <p2 x="640" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="760" y="220"/>
+      <p2 x="800" y="220"/>
+    </wire>
+    <wire>
+      <p1 x="640" y="220"/>
+      <p2 x="640" y="740"/>
+    </wire>
+    <wire>
+      <p1 x="260" y="140"/>
+      <p2 x="260" y="240"/>
+    </wire>
+    <wire>
+      <p1 x="740" y="140"/>
+      <p2 x="740" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="580" y="280"/>
+      <p2 x="580" y="360"/>
+    </wire>
+    <wire>
+      <p1 x="680" y="180"/>
+      <p2 x="680" y="580"/>
+    </wire>
+    <wire>
+      <p1 x="780" y="120"/>
+      <p2 x="780" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="300" y="180"/>
+      <p2 x="300" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="120"/>
+      <p2 x="240" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="720" y="160"/>
+      <p2 x="720" y="420"/>
+    </wire>
+    <wire>
+      <p1 x="660" y="200"/>
+      <p2 x="660" y="660"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="160"/>
+      <p2 x="280" y="320"/>
+    </wire>
+    <wire>
+      <p1 x="760" y="220"/>
+      <p2 x="760" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="540" y="300"/>
+      <p2 x="540" y="500"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
